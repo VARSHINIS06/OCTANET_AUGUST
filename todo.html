@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student To-Do List</title>
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #446df2, #feb47b);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background Circles */
+        .background-circles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .background-circles div {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: move 10s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        .background-circles div:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            animation-duration: 8s;
+        }
+
+        .background-circles div:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            width: 200px;
+            height: 200px;
+            animation-duration: 12s;
+        }
+
+        .background-circles div:nth-child(3) {
+            top: 80%;
+            left: 30%;
+            width: 250px;
+            height: 250px;
+            animation-duration: 14s;
+        }
+
+        @keyframes move {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(20px); }
+        }
+
+        /* To-Do Container */
+        .todo-container {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .todo-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+        }
+
+        .todo-container input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .todo-container button.add-btn {
+            width: 50%;
+            padding: 12px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background-color: #ffffff;
+            color: #446df2;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .todo-container button.add-btn:hover {
+            background-color: #446df2;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Task List */
+        ul#taskList {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        ul#taskList li {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        ul#taskList li:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        ul#taskList li span {
+            flex-grow: 1;
+            text-align: left;
+            margin-left: 10px;
+            word-break: break-word;
+        }
+
+        ul#taskList li button.delete-btn {
+            background-color: #446df2;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-left: 10px;
+        }
+
+        ul#taskList li button.delete-btn:hover {
+            background-color:#446df2;
+            transform: scale(1.05);
+        }
+
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="todo-container">
+        <h2>To-Do List</h2>
+        <input type="text" id="taskInput" placeholder="Enter a new task...">
+        <button class="add-btn" onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <div class="background-circles">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskList = document.getElementById('taskList');
+            const taskText = taskInput.value.trim();
+
+            if (taskText === '') {
+                taskInput.focus();
+                return;
+            }
+
+            const li = document.createElement('li');
+
+            const taskSpan = document.createElement('span');
+            taskSpan.textContent = taskText;
+            li.appendChild(taskSpan);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.classList.add('delete-btn');
+            deleteBtn.onclick = function() {
+                taskList.removeChild(li);
+            };
+            li.appendChild(deleteBtn);
+
+            taskList.appendChild(li);
+            taskInput.value = '';
+            taskInput.focus();
+        }
+
+        // Allow adding task by pressing Enter key
+        document.getElementById('taskInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
+
+</body>
+</html>

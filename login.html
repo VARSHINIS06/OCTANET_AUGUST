@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #446df2, #feb47b);
+            color: white;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .login-container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .login-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+        }
+
+        .login-container input {
+            display: block;
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .login-container button {
+            width: 50%;
+            padding: 12px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background-color: #ffffff;
+            color:#446df2;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background-color: #feb47b;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .quote {
+            font-size: 1.2rem;
+            margin-top: 30px;
+            font-style: italic;
+            opacity: 0.9;
+            color: #ffffff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .background-circles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .background-circles div {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: move 10s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        .background-circles div:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            animation-duration: 8s;
+        }
+
+        .background-circles div:nth-child(2) {
+            top: 50%;
+            left: 70%;
+            width: 200px;
+            height: 200px;
+            animation-duration: 12s;
+        }
+
+        .background-circles div:nth-child(3) {
+            top: 80%;
+            left: 30%;
+            width: 250px;
+            height: 250px;
+            animation-duration: 14s;
+        }
+
+        @keyframes move {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p class="quote">"Your limitation—it’s only your imagination."</p>
+    </div>
+
+    <div class="background-circles">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (username === 'user' && password === 'password') {
+                window.location.href = 'todo.html'; // Redirect to the to-do list page
+            } else {
+                window.location.href = 'todo.html'; // Redirect to the to-do list page regardless
+            }
+        }
+    </script>
+
+</body>
+</html>
